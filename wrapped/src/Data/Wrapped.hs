@@ -44,7 +44,10 @@ import Data.Function (on)
 import Data.Kind (Constraint, Type)
 import GHC.Exts (IsList(Item))
 import qualified GHC.Exts as Exts (IsList(..))
-import GHC.Generics (Generic(..), M1(..), (:*:)(..), U1(..), K1(..))
+import GHC.Generics
+         ( Generic(..), Generic1(..)
+         , M1(..), (:*:)(..), U1(..), K1(..)
+         )
 import Text.Read (Read(..), readListPrecDefault)
 
 -- | A type holding derived instances for classes of kind @Type -> Constraint@.
@@ -200,3 +203,11 @@ instance (Applicative f, Semigroup a)
 -- | Provide 'mappend' by 'liftA2' and 'mempty' by @'pure' 'mempty'@.
 instance (Applicative f, Monoid m) => Monoid (Wrapped1 Applicative f m) where
   mempty = Wrapped1 (pure mempty)
+
+-- | Forwarding instance for 'Functor'.
+--
+-- If we want @Wrapped1 Generic1 f@ to have instances for things with 'Functor'
+-- as a superclass, then it needs to have a 'Functor' instance.  There's not
+-- much point in providing a Generics-based one, though because @DeriveFunctor@
+-- exists.  So, just forward the underlying type's instance.
+deriving newtype instance Functor f => Functor (Wrapped1 Generic1 f)
