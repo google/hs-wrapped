@@ -12,21 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-name: wrapped
+name: wrapped-generic-default
 version: 0.1.0.0
 category: Generics
-synopsis: Provides a single standardized place to hang DerivingVia instances.
+synopsis: Provides an orphan instance Default (Wrapped Generic a)
 description: |
-  This exports the newtypes 'Wrapped' and 'Wrapped1', which are meant to hold
-  typeclass implementations derived from other classes (most frequently,
-  'Generic' and 'Generic1').  If you implement a general instance of a class,
-  add it as an instance for 'Wrapped' or 'Wrapped1', and users will be able to
-  derive it uniformly as @deriving TheClass via Wrapped TheType@.
+  This provides support for Generic-based deriving of Default as an instance on
+  Wrapped Generic, so that Default instances can be derived as
+  "deriving Default via Wrapped Generic MyType".
 license: Apache-2.0
-author: Andrew Pritchard <awpr@google.com>
-copyright: 2019-2021 Google LLC
+author: Reiner Pope <reinerp@google.com>
+copyright: 2017-2021 Google LLC
 maintainer: Andrew Pritchard <awpr@google.com>
-github: google/hs-wrapped/wrapped
+github: google/hs-wrapped/wrapped-generic-default
 
 # Note: this causes CHANGELOG.md to be included in Hackage distributions.
 extra-source-files:
@@ -36,8 +34,10 @@ ghc-options: -Wall -Werror
 
 dependencies:
   - base >= 4.12 && < 4.16
+  - data-default-class >= 0.0 && < 0.2
+  - wrapped >= 0.1 && < 0.2
 
 library:
   source-dirs: src
   exposed-modules:
-    - Data.Wrapped
+    - Data.Wrapped.Default

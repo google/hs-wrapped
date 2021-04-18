@@ -36,13 +36,12 @@ module Data.Wrapped
   ) where
 
 import Control.Applicative (liftA2)
-import Data.Default.Class (Default(..))
 import qualified Data.Foldable as F (toList)
 import Data.Function (on)
 import Data.Kind (Constraint, Type)
 import GHC.Exts (IsList(Item))
 import qualified GHC.Exts as Exts (IsList(..))
-import GHC.Generics (Generic(..), M1(..), (:+:)(..), (:*:)(..), U1(..), K1(..))
+import GHC.Generics (Generic(..), M1(..), (:*:)(..), U1(..), K1(..))
 import Text.Read (Read(..), readListPrecDefault)
 
 -- | A type holding derived instances for classes of kind @Type -> Constraint@.
@@ -74,44 +73,6 @@ newtype Wrapped1 (c :: (k -> Type) -> Constraint) f (a :: k) =
 -- Likewise, @'Wrapped1' 'Generic1'@ works on 'Rep1' types by 'to1' and 'from1'.
 --
 -- This is the same concept applied to type constructors with one parameter.
-
--- This only lives here because otherwise it'd be an orphan instance.
-
--- | Generic instances for Default
-class GDefault f where
-  gdef :: f x
-
-instance GDefault f => GDefault (M1 i m f) where
-  gdef = M1 gdef
-
-instance GDefault f => GDefault (f :+: g) where
-  gdef = L1 gdef
-
-instance (GDefault f, GDefault g) => GDefault (f :*: g) where
-  gdef = gdef :*: gdef
-
-instance GDefault U1 where
-  gdef = U1
-
-instance Default a => GDefault (K1 i a) where
-  gdef = K1 def
-
--- | The first constructor with all fields set to 'def'.
---
--- Given the data type definition:
---
--- @
---     data Foo = Foo Int Bool | Bar Double
---       deriving Generic
---       deriving Default via G Foo
--- @
---
--- then
---
--- @def = Foo def def :: Foo@, i.e. 'def' picks the first constructor and fills
--- it with 'def' calls.
-instance (Generic a, GDefault (Rep a)) => Default (Wrapped Generic a) where
-  def = Wrapped $ to gdef
 
 -- Generic Semigroup.
 class GSemigroup f where
