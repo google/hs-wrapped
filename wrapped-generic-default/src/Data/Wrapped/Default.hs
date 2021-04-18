@@ -12,6 +12,8 @@
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
 
+-- | Provides instance @Default (Wrapped Generic a)@ for use with @DerivingVia@.
+
 {-# OPTIONS_GHC -Wno-orphans #-}
 
 {-# LANGUAGE FlexibleContexts #-}
@@ -19,7 +21,7 @@
 {-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE UndecidableInstances #-}
 
-module Data.Wrapped.Default () where
+module Data.Wrapped.Default (GDefault(..)) where
 
 import GHC.Generics
          ( Generic(..), M1(..), (:+:)(..), (:*:)(..), U1(..), K1(..)
@@ -28,7 +30,10 @@ import GHC.Generics
 import Data.Default.Class (Default(..))
 import Data.Wrapped (Wrapped(..))
 
--- | Generic instances for Default
+-- | Generic instances for Default.
+--
+-- Exported just to give Haddock something to link to; use @Wrapped Generic@
+-- with @-XDerivingVia@ instead.
 class GDefault f where
   gdef :: f x
 

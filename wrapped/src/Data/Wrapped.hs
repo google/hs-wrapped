@@ -12,6 +12,8 @@
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
 
+-- | Provides 'Wrapped' and 'Wrapped1' types to hold @DerivingVia@ instances.
+
 {-# LANGUAGE DerivingVia #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE FlexibleInstances #-}
@@ -25,15 +27,16 @@
 {-# LANGUAGE UndecidableInstances #-}
 
 module Data.Wrapped
-  ( -- * Derived Instances
-    Wrapped(..), Wrapped1(..)
-    -- ** Wrapped 'Generic'
-    -- $Wrapped_Generic
-    -- ** Wrapped 'IsList'
-    -- $Wrapped_IsList
-    -- ** Wrapped 'Foldable'
-    -- $Wrapped_Foldable
-  ) where
+         ( -- * Derived Instances
+           Wrapped(..), Wrapped1(..)
+           -- ** Wrapped 'Generic'
+           -- $Wrapped_Generic
+         , GSemigroup(..), GMonoid(..)
+           -- ** Wrapped 'IsList'
+           -- $Wrapped_IsList
+           -- ** Wrapped 'Foldable'
+           -- $Wrapped_Foldable
+         ) where
 
 import Control.Applicative (liftA2)
 import qualified Data.Foldable as F (toList)
@@ -46,7 +49,7 @@ import Text.Read (Read(..), readListPrecDefault)
 
 -- | A type holding derived instances for classes of kind @Type -> Constraint@.
 --
--- For example, 'Show' or 'Pretty'.
+-- For example, 'Show' or @Pretty@.
 --
 -- Generally, instances derived from @SomeClass@ should be placed on
 -- @'Wrapped' SomeClass@.  This way, they can be grouped into relatively few
@@ -70,11 +73,14 @@ newtype Wrapped1 (c :: (k -> Type) -> Constraint) f (a :: k) =
 -- 'Monoid', it provides field-wise 'mappend' and 'mempty' of types that are
 -- products of other 'Monoid's.
 --
--- Likewise, @'Wrapped1' 'Generic1'@ works on 'Rep1' types by 'to1' and 'from1'.
---
--- This is the same concept applied to type constructors with one parameter.
+-- Likewise, @'Wrapped1' 'GHC.Generics.Generic1'@ works on 'GHC.Generics.Rep1'
+-- types by 'GHC.Generics.to1' and 'GHC.Generics.from1'.  This is the same
+-- concept applied to type constructors with one parameter.
 
--- Generic Semigroup.
+-- | Generic Semigroup.
+--
+-- Exported just to give Haddock something to link to; use @Wrapped Generic@
+-- with @-XDerivingVia@ instead.
 class GSemigroup f where
   gsop :: f x -> f x -> f x
 
@@ -94,7 +100,10 @@ instance Semigroup a => GSemigroup (K1 i a) where
 instance (Generic a, GSemigroup (Rep a)) => Semigroup (Wrapped Generic a) where
   Wrapped a <> Wrapped b = Wrapped . to $ from a `gsop` from b
 
--- Generic Monoid.
+-- | Generic Monoid.
+--
+-- Exported just to give Haddock something to link to; use @Wrapped Generic@
+-- with @-XDerivingVia@ instead.
 class GMonoid f where
   gmempty :: f x
 
@@ -126,21 +135,21 @@ instance (Generic a, GSemigroup (Rep a), GMonoid (Rep a))
 -- operands to lists and compare them, and a 'Read' instance that parses a list
 -- and converts to the desired type.
 --
--- Whereas 'ItsFoldable' requires that the type is a type constructor whose
--- argument is the list element, this works on any type with an 'IsList'
+-- Whereas @Wrapped 'Foldable'@ requires that the type is a type constructor
+-- whose argument is the list element, this works on any type with an 'IsList'
 -- instance.
 --
 -- On the other hand, 'IsList' requires that the type can be converted /from/ a
 -- list, not only /to/ a list, so it can often require unneeded constraints
--- compared to 'ItsFoldable'.
+-- compared to 'Foldable'.
 --
 -- Generally, if both of these compile, they should be expected to be
--- equivalent.  More specifically, if you implement instances for either of
--- these types, you should ensure that, as long as the 'Foldable' instance of
--- @f@ and the 'IsList' instance of @f a@, the instances are the same; and if
--- you adopt instances from this type, you should ensure that your 'Foldable'
--- and 'IsList' instances agree, and may then assume that 'ItsIsList' and
--- 'ItsFoldable' give the same instances.
+-- equivalent.  More specifically, if you implement instances for @Wrapped
+-- Foldable@ or @Wrapped IsList@ these types, you should ensure that, as long
+-- as the 'Foldable' instance of @f@ and the 'IsList' instance of @f a@ are
+-- consistent, the instances are the same; and if you adopt instances from this
+-- type, you should ensure that your 'Foldable' and 'IsList' instances agree,
+-- and may then assume that 'IsList' and 'Foldable' give the same instances.
 
 -- | Just forwarding the instance; not meant to be used for deriving.
 deriving newtype instance IsList a => IsList (Wrapped IsList a)
