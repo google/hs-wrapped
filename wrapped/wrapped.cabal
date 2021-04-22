@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 53113221d6bbced78ef80af09cf983826f0627eb5779a2d859d0a713ca4433b9
+-- hash: a27647153dcb513dd8b7c70bf1781880c370698534627f18c729adad9e5edbc7
 
 name:           wrapped
 version:        0.1.0.0
@@ -37,7 +37,6 @@ library
     Paths_wrapped
   hs-source-dirs:
     src
-  ghc-options: -Wall -Werror
   build-depends:
     base >=4.12 && <4.16
   default-language: Haskell2010

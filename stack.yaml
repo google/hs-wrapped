@@ -17,3 +17,6 @@ resolver: lts-17.9
 packages:
 - wrapped
 - wrapped-generic-default
+
+ghc-options:
+  "$locals": -Wall -Werror

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: bc4635db89f06fdc48e93a594d39ad1588f23c0edf5cea4a2ab0e764f7f3f7b9
+-- hash: e5ad0b32d5d4518123fa677fb95941a49f1ace35a5ed91d6327355901f4688cb
 
 name:           wrapped-generic-default
 version:        0.1.0.0
@@ -35,7 +35,6 @@ library
       Paths_wrapped_generic_default
   hs-source-dirs:
       src
-  ghc-options: -Wall -Werror
   build-depends:
       base >=4.12 && <4.16
     , data-default-class >=0.0 && <0.2
