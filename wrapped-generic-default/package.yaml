@@ -21,6 +21,7 @@ description: |
   Wrapped Generic, so that Default instances can be derived as
   "deriving Default via Wrapped Generic MyType".
 license: Apache-2.0
+license-file: LICENSE
 author: Reiner Pope <reinerp@google.com>
 copyright: 2017-2021 Google LLC
 maintainer: Andrew Pritchard <awpr@google.com>

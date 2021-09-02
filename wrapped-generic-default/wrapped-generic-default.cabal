@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: e5ad0b32d5d4518123fa677fb95941a49f1ace35a5ed91d6327355901f4688cb
+-- hash: e69f5685692812e04350f514b1a564d95ef67c59fb5bb18633ae8898a3cc5d6f
 
 name:           wrapped-generic-default
 version:        0.1.0.0
@@ -19,6 +19,7 @@ author:         Reiner Pope <reinerp@google.com>
 maintainer:     Andrew Pritchard <awpr@google.com>
 copyright:      2017-2021 Google LLC
 license:        Apache-2.0
+license-file:   LICENSE
 build-type:     Simple
 extra-source-files:
     CHANGELOG.md
