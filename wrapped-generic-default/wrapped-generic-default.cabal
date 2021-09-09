@@ -4,14 +4,14 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: e69f5685692812e04350f514b1a564d95ef67c59fb5bb18633ae8898a3cc5d6f
+-- hash: 2f757e4a17de1a7ac10e43c7f185e3e113a3a1df9de3c4ec3261468588fea7fb
 
 name:           wrapped-generic-default
 version:        0.1.0.0
 synopsis:       Provides an orphan instance Default (Wrapped Generic a)
 description:    This provides support for Generic-based deriving of Default as an instance on
                 Wrapped Generic, so that Default instances can be derived as
-                "deriving Default via Wrapped Generic MyType".
+                @deriving Default via Wrapped Generic MyType@.
 category:       Generics
 homepage:       https://github.com/google/hs-wrapped#readme
 bug-reports:    https://github.com/google/hs-wrapped/issues
@@ -38,6 +38,6 @@ library
       src
   build-depends:
       base >=4.12 && <4.16
-    , data-default-class >=0.0 && <0.2
-    , wrapped >=0.1 && <0.2
+    , data-default-class >=0.0 && <0.1.3
+    , wrapped >=0.1 && <0.1.1
   default-language: Haskell2010

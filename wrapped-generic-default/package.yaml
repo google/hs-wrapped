@@ -19,9 +19,8 @@ synopsis: Provides an orphan instance Default (Wrapped Generic a)
 description: |
   This provides support for Generic-based deriving of Default as an instance on
   Wrapped Generic, so that Default instances can be derived as
-  "deriving Default via Wrapped Generic MyType".
+  @deriving Default via Wrapped Generic MyType@.
 license: Apache-2.0
-license-file: LICENSE
 author: Reiner Pope <reinerp@google.com>
 copyright: 2017-2021 Google LLC
 maintainer: Andrew Pritchard <awpr@google.com>
@@ -33,8 +32,8 @@ extra-source-files:
 
 dependencies:
   - base >= 4.12 && < 4.16
-  - data-default-class >= 0.0 && < 0.2
-  - wrapped >= 0.1 && < 0.2
+  - data-default-class >= 0.0 && < 0.1.3
+  - wrapped >= 0.1 && < 0.1.1
 
 library:
   source-dirs: src
