@@ -31,11 +31,15 @@ module Data.Wrapped
            Wrapped(..), Wrapped1(..)
            -- ** Wrapped 'Generic'
            -- $Wrapped_Generic
-         , GSemigroup(..), GMonoid(..)
+
            -- ** Wrapped 'IsList'
            -- $Wrapped_IsList
+
            -- ** Wrapped 'Foldable'
            -- $Wrapped_Foldable
+
+           -- * Internals
+           , GSemigroup(..), GMonoid(..)
          ) where
 
 import Control.Applicative (liftA2)
