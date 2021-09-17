@@ -4,10 +4,10 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: e0afcb2bfa2caf82798dcda573c47f1043922eedabf3601cddf74ddf9e49e42e
+-- hash: 4500c6c26363d1ccde6c149d7a5f8f073bbb8b95f173c1625140478ff5f9ae8f
 
 name:           wrapped
-version:        0.1.0.0
+version:        0.1.0.1
 synopsis:       Provides a single standardized place to hang DerivingVia instances.
 description:    This exports the newtypes 'Wrapped' and 'Wrapped1', which are meant to hold
                 typeclass implementations derived from other classes (most frequently,
@@ -39,5 +39,5 @@ library
   hs-source-dirs:
     src
   build-depends:
-    base >=4.12 && <4.16
+    base >=4.9 && <4.16
   default-language: Haskell2010

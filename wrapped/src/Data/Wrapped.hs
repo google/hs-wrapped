@@ -14,7 +14,7 @@
 
 -- | Provides 'Wrapped' and 'Wrapped1' types to hold @DerivingVia@ instances.
 
-{-# LANGUAGE DerivingVia #-}
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
@@ -42,6 +42,9 @@ import Control.Applicative (liftA2)
 import qualified Data.Foldable as F (toList)
 import Data.Function (on)
 import Data.Kind (Constraint, Type)
+#if !MIN_VERSION_base(4, 11, 0)
+import Data.Semigroup (Semigroup(..))
+#endif
 import GHC.Exts (IsList(Item))
 import qualified GHC.Exts as Exts (IsList(..))
 import GHC.Generics
@@ -128,6 +131,9 @@ instance Monoid a => GMonoid (K1 i a) where
 -- mix this with a `Semigroup` instance from another source.
 instance (Generic a, GSemigroup (Rep a), GMonoid (Rep a))
       => Monoid (Wrapped Generic a) where
+#if !MIN_VERSION_base(4, 11, 0)
+  mappend = (<>)
+#endif
   mempty = Wrapped $ to gmempty
 
 -- $Wrapped_IsList
@@ -155,7 +161,11 @@ instance (Generic a, GSemigroup (Rep a), GMonoid (Rep a))
 -- and may then assume that 'IsList' and 'Foldable' give the same instances.
 
 -- | Just forwarding the instance; not meant to be used for deriving.
-deriving newtype instance IsList a => IsList (Wrapped IsList a)
+instance IsList a => IsList (Wrapped IsList a) where
+  type Item (Wrapped IsList a) = Exts.Item a
+  fromList = Wrapped . Exts.fromList
+  fromListN n = Wrapped . Exts.fromListN n
+  toList = Exts.toList . unWrapped
 
 -- | Equality of the results of 'Exts.toList'.
 instance (IsList a, Eq (Item a)) => Eq (Wrapped IsList a) where
@@ -181,7 +191,7 @@ instance (IsList a, Read (Item a)) => Read (Wrapped IsList a) where
 -- See above for a description of how this differs from @'Wrapped' 'IsList'@.
 
 -- | Just forwarding the instance; not meant to be used for deriving.
-deriving newtype instance Foldable f => Foldable (Wrapped1 Foldable f)
+deriving instance Foldable f => Foldable (Wrapped1 Foldable f)
 
 -- | Equality of the results of 'F.toList'.
 instance (Foldable f, Eq a) => Eq (Wrapped1 Foldable f a) where
@@ -201,7 +211,16 @@ instance (Applicative f, Semigroup a)
   (<>) = fmap Wrapped1 . (liftA2 (<>) `on` unWrapped1)
 
 -- | Provide 'mappend' by 'liftA2' and 'mempty' by @'pure' 'mempty'@.
-instance (Applicative f, Monoid m) => Monoid (Wrapped1 Applicative f m) where
+instance ( Applicative f
+         , Monoid a
+#if !MIN_VERSION_base(4, 11, 0)
+         , Semigroup a
+#endif
+         )
+      => Monoid (Wrapped1 Applicative f a) where
+#if !MIN_VERSION_base(4, 11, 0)
+  mappend = (<>)
+#endif
   mempty = Wrapped1 (pure mempty)
 
 -- | Forwarding instance for 'Functor'.
@@ -210,4 +229,4 @@ instance (Applicative f, Monoid m) => Monoid (Wrapped1 Applicative f m) where
 -- as a superclass, then it needs to have a 'Functor' instance.  There's not
 -- much point in providing a Generics-based one, though because @DeriveFunctor@
 -- exists.  So, just forward the underlying type's instance.
-deriving newtype instance Functor f => Functor (Wrapped1 Generic1 f)
+deriving instance Functor f => Functor (Wrapped1 Generic1 f)
