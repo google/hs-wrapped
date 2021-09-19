@@ -2,9 +2,20 @@
 
 A single standardized place to hang `DerivingVia` instances.
 
+[![Stack CI](https://github.com/google/hs-wrapped/actions/workflows/stack-ci.yml/badge.svg)](https://github.com/google/hs-wrapped/actions/workflows/stack-ci.yml)
+
 ## Disclaimer
 
 This is not an officially supported Google product.
+
+## Hackage Status
+
+* [![wrapped](https://badgen.net/runkit/awpr/hackage/v/wrapped?icon=haskell&cache=600)](https://hackage.haskell.org/package/wrapped)
+  ![Uploaded](https://badgen.net/runkit/awpr/hackage/t/wrapped?cache=600)
+  ![Haddock](https://badgen.net/runkit/awpr/hackage/d/wrapped?cache=600)
+* [![wrapped-generic-default](https://badgen.net/runkit/awpr/hackage/v/wrapped-generic-default?icon=haskell)](https://hackage.haskell.org/package/wrapped-generic-default&cache=600)
+  ![Uploaded](https://badgen.net/runkit/awpr/hackage/t/wrapped-generic-default?cache=600)
+  ![Haddock](https://badgen.net/runkit/awpr/hackage/d/wrapped-generic-default?cache=600)
 
 ## Overview
 
