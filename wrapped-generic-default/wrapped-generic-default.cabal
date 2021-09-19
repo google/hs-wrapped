@@ -1,10 +1,10 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.33.0.
+-- This file has been generated from package.yaml by hpack version 0.34.4.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 6796d3470378d01243f5ce8779defcb0087e21dc2568cf89e482c0fc6f18198a
+-- hash: c341d6bf053d8564de4cdca0f2ac3b8ffbd1b90f4d445c8efd5e454784343a31
 
 name:           wrapped-generic-default
 version:        0.1.0.1
@@ -32,8 +32,6 @@ source-repository head
 library
   exposed-modules:
       Data.Wrapped.Default
-  other-modules:
-      Paths_wrapped_generic_default
   hs-source-dirs:
       src
   build-depends:

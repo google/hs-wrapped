@@ -39,3 +39,7 @@ library:
   source-dirs: src
   exposed-modules:
     - Data.Wrapped.Default
+
+  when:
+    condition: false
+    other-modules: Paths_wrapped_generic_default

@@ -23,7 +23,6 @@ description: |
   add it as an instance for 'Wrapped' or 'Wrapped1', and users will be able to
   derive it uniformly as @deriving TheClass via Wrapped TheType@.
 license: Apache-2.0
-license-file: LICENSE
 author: Andrew Pritchard <awpr@google.com>
 copyright: 2019-2021 Google LLC
 maintainer: Andrew Pritchard <awpr@google.com>
@@ -40,3 +39,7 @@ library:
   source-dirs: src
   exposed-modules:
     - Data.Wrapped
+
+  when:
+    condition: false
+    other-modules: Paths_wrapped
