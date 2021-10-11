@@ -3,12 +3,10 @@ cabal-version: 1.12
 -- This file has been generated from package.yaml by hpack version 0.34.4.
 --
 -- see: https://github.com/sol/hpack
---
--- hash: c341d6bf053d8564de4cdca0f2ac3b8ffbd1b90f4d445c8efd5e454784343a31
 
 name:           wrapped-generic-default
 version:        0.1.0.1
-synopsis:       Provides an orphan instance Default (Wrapped Generic a)
+synopsis:       A Generic instance of Default
 description:    This provides support for Generic-based deriving of Default as an instance on
                 Wrapped Generic, so that Default instances can be derived as
                 @deriving Default via Wrapped Generic MyType@.
